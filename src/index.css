@@ -14,4 +14,34 @@ body {
   font-family: 'Open Sans', sans-serif;
   text-align: center;
   overflow-y: scroll !important;
+  overflow-x: hidden !important;
+  position: 'relative';
+}
+
+@keyframes slideCloud1 {
+  from {
+    left: -150vw;
+  }
+
+  to {
+    left: 250vw;
+  }
+}
+
+@keyframes floatCloud1 {
+  0% {
+    transform: translateY(-50px);
+  }
+  25% {
+    transform: translateY(-20px);
+  }
+  50% {
+    transform: translateY(50px);
+  }
+  75% {
+    transform: translateY(-30px);
+  }
+  100% {
+    transform: translateY(-50px);
+  }
 }

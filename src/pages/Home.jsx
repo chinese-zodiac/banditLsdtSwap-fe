@@ -83,7 +83,7 @@ export default function Home() {
       : parseEther('0');
 
   const [openTimestamp, closeTimestamp] =
-    !swapperIsLoading && !swapperIsError
+    !swapperIsLoading && !swapperIsError && !!swapperData[0] && !!swapperData[1]
       ? [swapperData[0].toNumber(), swapperData[1].toNumber()]
       : [0, 0];
 
@@ -116,7 +116,7 @@ export default function Home() {
             paddingTop: '1em',
             textAlign: 'left',
             position: 'relative',
-            zIndex: 2,
+            zIndex: 3,
           }}
         >
           <Card sx={{ boxShadow: textShadow }}>
@@ -128,6 +128,110 @@ export default function Home() {
               muted
             />
           </Card>
+          <Box
+            as="img"
+            src="./images/CLOUD.png"
+            sx={{
+              left: '-150vw',
+              maxWidth: '90vw',
+              margin: 0,
+              position: 'absolute',
+              animationName: 'slideCloud1, floatCloud1',
+              animationDuration: '34s, 10s',
+              animationIterationCount: 'infinite ',
+              animationDelay: '0s, 0s',
+            }}
+          />
+          <Box
+            as="img"
+            src="./images/CLOUD.png"
+            sx={{
+              left: '-150vw',
+              filter: 'hue-rotate(30deg)',
+              maxWidth: '90vw',
+              margin: 0,
+              position: 'absolute',
+              animationName: 'slideCloud1, floatCloud1',
+              animationDuration: '31s, 15',
+              animationIterationCount: 'infinite ',
+              animationDelay: '2s, 0s',
+            }}
+          />
+          <Box
+            as="img"
+            src="./images/CLOUD.png"
+            sx={{
+              left: '-150vw',
+              filter: 'hue-rotate(60deg)',
+              maxWidth: '90vw',
+              margin: 0,
+              position: 'absolute',
+              animationName: 'slideCloud1, floatCloud1',
+              animationDuration: '35s, 11',
+              animationIterationCount: 'infinite ',
+              animationDelay: '7s, 0s',
+            }}
+          />
+          <Box
+            as="img"
+            src="./images/CLOUD.png"
+            sx={{
+              left: '-150vw',
+              filter: 'hue-rotate(90deg)',
+              maxWidth: '90vw',
+              margin: 0,
+              position: 'absolute',
+              animationName: 'slideCloud1, floatCloud1',
+              animationDuration: '26s, 14',
+              animationIterationCount: 'infinite ',
+              animationDelay: '11s, 0s',
+            }}
+          />
+          <Box
+            as="img"
+            src="./images/CLOUD.png"
+            sx={{
+              left: '-150vw',
+              filter: 'hue-rotate(120deg)',
+              maxWidth: '90vw',
+              margin: 0,
+              position: 'absolute',
+              animationName: 'slideCloud1, floatCloud1',
+              animationDuration: '28s, 12s',
+              animationIterationCount: 'infinite ',
+              animationDelay: '16s, 0s',
+            }}
+          />
+          <Box
+            as="img"
+            src="./images/CLOUD.png"
+            sx={{
+              left: '-150vw',
+              filter: 'hue-rotate(150deg)',
+              maxWidth: '90vw',
+              margin: 0,
+              position: 'absolute',
+              animationName: 'slideCloud1, floatCloud1',
+              animationDuration: '42s, 9s',
+              animationIterationCount: 'infinite ',
+              animationDelay: '1s, 0s',
+            }}
+          />
+          <Box
+            as="img"
+            src="./images/CLOUD.png"
+            sx={{
+              left: '-150vw',
+              filter: 'hue-rotate(180deg)',
+              maxWidth: '90vw',
+              margin: 0,
+              position: 'absolute',
+              animationName: 'slideCloud1, floatCloud1',
+              animationDuration: '29s, 10s',
+              animationIterationCount: 'infinite ',
+              animationDelay: '17s, 0s',
+            }}
+          />
           <Typography
             as="h1"
             sx={{
@@ -139,6 +243,8 @@ export default function Home() {
               marginTop: '1em',
               fontWeight: 'bold',
               textShadow: textShadow,
+              position: 'relative',
+              zIndex: 3,
             }}
           >
             Unleash the Bandit Within:
@@ -156,13 +262,15 @@ export default function Home() {
               marginTop: '1em',
               fontWeight: 'bold',
               textShadow: textShadow,
+              position: 'relative',
+              zIndex: 3,
             }}
           >
             OPEN: {startTimer}
             <br />
             CLOSE: {endTimer}
           </Typography>
-          <Box sx={{ textAlign: 'center' }}>
+          <Box sx={{ textAlign: 'center', position: 'relative', zIndex: 3 }}>
             <EtherTextField
               decimals={18}
               value={lsdtValue}
@@ -254,13 +362,13 @@ export default function Home() {
             margin: '0',
             position: 'relative',
             top: '5px',
-            zIndex: 2,
+            zIndex: 3,
           }}
           as="img"
           src="./images/FLAMETHROWER.png"
         />
       </Box>
-      <FooterArea sx={{ zIndex: 2, position: 'relative' }} />
+      <FooterArea sx={{ zIndex: 3, position: 'relative' }} />
     </>
   );
 }
