@@ -70,7 +70,8 @@ function HeaderBar({ lsdtBal, banditBal }) {
                     }}
                   >
                     {lsdtBal}
-                  </Typography>{' '}
+                  </Typography>
+                  <br />
                   🎭🔫💰🏴‍☠️👤:{' '}
                   <Typography
                     as="span"

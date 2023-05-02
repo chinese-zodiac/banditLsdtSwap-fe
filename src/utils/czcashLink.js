@@ -7,7 +7,7 @@ export const czCashBuyLink = (inAddress, outAddress) => {
   if (inAddress == outAddress) {
     return `${LINK_CZCASH}/#/swap?out=${outAddress}`;
   } else {
-    return `${LINK_CZCASH}/#/swap?in=${fromAddress}&out=${outAddress}`;
+    return `${LINK_CZCASH}/#/swap?in=${inAddress}&out=${outAddress}`;
 
   }
 }

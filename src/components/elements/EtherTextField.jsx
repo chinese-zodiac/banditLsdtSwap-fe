@@ -45,7 +45,6 @@ function EtherTextField({
 
   const updateValue = (event) => {
     const { value: targetValue } = event.currentTarget;
-    console.log(targetValue);
 
     if (targetValue === '') {
       setPrevValue(targetValue);

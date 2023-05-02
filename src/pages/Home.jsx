@@ -1,9 +1,9 @@
 import { useTheme } from '@emotion/react';
 import {
   Button,
+  Card,
+  CardMedia,
   Container,
-  Icon,
-  IconButton,
   TextField,
   Typography,
 } from '@mui/material';
@@ -11,20 +11,50 @@ import Box from '@mui/material/Box';
 import { BigNumber } from 'ethers';
 import { parseEther } from 'ethers/lib/utils.js';
 import { useState } from 'react';
-import { useAccount, useBalance } from 'wagmi';
+import { useAccount, useBalance, useContractReads } from 'wagmi';
+import BanditLsdtSwapAbi from '../abi/BanditLsdtSwap.json';
 import EtherTextField from '../components/elements/EtherTextField';
 import FooterArea from '../components/layouts/FooterArea';
 import HeaderBar from '../components/layouts/HeaderBar';
-import { ADDRESS_BANDIT, ADDRESS_LSDT } from '../constants/addresses';
-import { LINK_TELEGRAM } from '../constants/links';
+import {
+  ADDRESS_BANDIT,
+  ADDRESS_BANDITLSDTSWAP,
+  ADDRESS_LSDT,
+} from '../constants/addresses';
+import useCountdown from '../hooks/useCountdown';
 import { bnToCompact } from '../utils/bnToFixed';
+import { czCashBuyLink } from '../utils/czcashLink';
+
+const banditLsdtSwapContract = {
+  address: ADDRESS_BANDITLSDTSWAP,
+  abi: BanditLsdtSwapAbi,
+};
 
 export default function Home() {
   const theme = useTheme();
 
+  const textShadow = `0px 0px 10px ${theme.palette.primary.dark}, 0px 0px 5px ${theme.palette.primary.dark}`;
+
   const [lsdtValue, setLsdtValue] = useState(parseEther('0'));
 
   const { address, isConnecting, isDisconnected } = useAccount();
+
+  const {
+    data: swapperData,
+    isError: swapperIsError,
+    isLoading: swapperIsLoading,
+  } = useContractReads({
+    contracts: [
+      {
+        ...banditLsdtSwapContract,
+        functionName: 'openTimestamp',
+      },
+      {
+        ...banditLsdtSwapContract,
+        functionName: 'closeTimestamp',
+      },
+    ],
+  });
 
   const {
     data: lsdtBalData,
@@ -52,30 +82,37 @@ export default function Home() {
       ? banditBalData?.value
       : parseEther('0');
 
+  const [openTimestamp, closeTimestamp] =
+    !swapperIsLoading && !swapperIsError
+      ? [swapperData[0].toNumber(), swapperData[1].toNumber()]
+      : [0, 0];
+
+  const startTimer = useCountdown(openTimestamp, 'Started');
+  const endTimer = useCountdown(closeTimestamp, 'Ended');
+
   return (
     <>
-      <Box css={{ backgroundColor: theme.palette.primary.dark }}>
+      <Box
+        css={{
+          backgroundColor: theme.palette.primary.dark,
+          backgroundImage: "url('./images/BG1.png')",
+          backgroundSize: 'contain',
+        }}
+      >
         <HeaderBar
           lsdtBal={bnToCompact(lsdtBal, 18, 5)}
           banditBal={bnToCompact(banditBal, 18, 5)}
         />
-        <Container
-          sx={{ minHeight: '100vh', paddingTop: '1em', textAlign: 'left' }}
-        >
-          <Box sx={{ marginLeft: '3.5em', marginBottom: '0.5em' }}>
-            <IconButton href={LINK_TELEGRAM} target="_blank">
-              <Icon
-                baseClassName="fab"
-                className="fa-telegram"
-                color="primary"
-                sx={{
-                  fontSize: '1.8em',
-                  backgroundColor: theme.palette.primary.dark,
-                  borderRadius: '0.9em',
-                }}
-              />
-            </IconButton>
-          </Box>
+        <Container sx={{ paddingTop: '1em', textAlign: 'left' }}>
+          <Card sx={{ boxShadow: textShadow }}>
+            <CardMedia
+              component="video"
+              image="./vids/BANDIT_VIDEO.mp4"
+              autoPlay
+              loop
+              muted
+            />
+          </Card>
           <Typography
             as="h1"
             sx={{
@@ -84,12 +121,31 @@ export default function Home() {
               lineHeight: 1.1,
               textAlign: 'left',
               marginLeft: { xs: '1.5em', md: '1em' },
+              marginTop: '1em',
               fontWeight: 'bold',
+              textShadow: textShadow,
             }}
           >
             Unleash the Bandit Within:
             <br />
             Maximize Your Gains by Burning LSDT Today!
+          </Typography>
+          <Typography
+            as="h1"
+            sx={{
+              color: theme.palette.text.primary,
+              fontSize: { xs: '1.5em', md: '2em' },
+              lineHeight: 1.1,
+              textAlign: 'center',
+              marginLeft: { xs: '1.5em', md: '1em' },
+              marginTop: '1em',
+              fontWeight: 'bold',
+              textShadow: textShadow,
+            }}
+          >
+            OPEN: {startTimer}
+            <br />
+            CLOSE: {endTimer}
           </Typography>
           <Box sx={{ textAlign: 'center' }}>
             <EtherTextField
@@ -104,7 +160,14 @@ export default function Home() {
                 <TextField
                   variant="standard"
                   sx={{
-                    '& .MuiInputBase-input': { fontSize: '2em' },
+                    marginBottom: '1em',
+                    marginTop: '1em',
+                    '& .MuiInputBase-input': {
+                      fontSize: '2em',
+                      backgroundColor: theme.palette.secondary.dark,
+                      paddingLeft: '1em',
+                      textShadow: `0px 0px 20px ${theme.palette.primary.dark}, 0px 0px 5px ${theme.palette.primary.dark}, 0px 0px 2px ${theme.palette.primary.dark}`,
+                    },
                   }}
                   {...props}
                 />
@@ -114,13 +177,50 @@ export default function Home() {
               max={lsdtBal}
             />
             <br />
-            <Button variant="contained">BURN LSDT</Button>
+            <Box
+              as="img"
+              src="./images/BurnLsdt.png"
+              variant="contained"
+              alt="BURN LSDT"
+              sx={{
+                width: '100%',
+                maxWidth: '445px',
+                cursor: 'pointer',
+                transition: '0.25s',
+                '&:hover': {
+                  filter: 'hue-rotate(-200deg) invert(100%)',
+                },
+              }}
+            />
             <br />
-            <br />
-            <br />
-            <Button variant="contained">BUY LSDT ON CZ.CASH</Button>
+            <Button
+              sx={{ marginTop: '5em' }}
+              href={czCashBuyLink('BNB', ADDRESS_LSDT)}
+              target="_blank"
+            >
+              <Box
+                as="img"
+                src="./images/BuyLsdt.png"
+                variant="contained"
+                alt="BURN LSDT"
+                sx={{
+                  width: '100%',
+                  maxWidth: '445px',
+                  cursor: 'pointer',
+                  transition: '0.25s',
+                  '&:hover': {
+                    filter: 'hue-rotate(-200deg) invert(100%)',
+                  },
+                }}
+              />
+            </Button>
           </Box>
         </Container>
+        <Box
+          sx={{ width: '100%', margin: '0', position: 'relative', top: '5px' }}
+          as="img"
+          src="./images/FLAMETHROWER.png"
+        />
         <FooterArea />
       </Box>
     </>

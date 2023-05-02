@@ -15,6 +15,7 @@ export default function FooterArea() {
           backgroundColor: theme.palette.background.paper,
           color: theme.palette.text.secondary,
           padding: '100px 0px',
+          margin: '0',
           width: '100%',
         }}
       >
