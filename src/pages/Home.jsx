@@ -192,21 +192,23 @@ export default function Home() {
               max={lsdtBal}
             />
             <br />
-            <Box
-              as="img"
-              src="./images/BurnLsdt.png"
-              variant="contained"
-              alt="BURN LSDT"
-              sx={{
-                width: '100%',
-                maxWidth: '445px',
-                cursor: 'pointer',
-                transition: '0.25s',
-                '&:hover': {
-                  filter: 'hue-rotate(-200deg) invert(100%)',
-                },
-              }}
-            />
+            <Button>
+              <Box
+                as="img"
+                src="./images/BurnLsdt.png"
+                variant="contained"
+                alt="BURN LSDT"
+                sx={{
+                  width: '100%',
+                  maxWidth: '445px',
+                  cursor: 'pointer',
+                  transition: '0.25s',
+                  '&:hover': {
+                    filter: 'hue-rotate(-200deg) invert(100%)',
+                  },
+                }}
+              />
+            </Button>
             <Typography
               as="p"
               sx={{
