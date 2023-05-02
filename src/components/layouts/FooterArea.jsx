@@ -29,7 +29,6 @@ export default function FooterArea() {
             maxWidth={1440}
           >
             <Grid2
-              item
               xs={12}
               sm={8}
               css={{
@@ -52,10 +51,10 @@ export default function FooterArea() {
                 />
               </Stack>
             </Grid2>
-            <Grid2 item xs={12}>
+            <Grid2 xs={12}>
               <h1>Terms of Use</h1>
             </Grid2>
-            <Grid2 item xs={12}>
+            <Grid2 xs={12}>
               <p>
                 By accessing any CZODIAC website, including but not limited to
                 CZODIAC's decentralized applications and services, and engaging
@@ -84,10 +83,10 @@ export default function FooterArea() {
                 </a>
               </p>
             </Grid2>
-            <Grid2 item xs={12}>
+            <Grid2 xs={12}>
               <h1>Privacy Policy</h1>
             </Grid2>
-            <Grid2 item xs={12}>
+            <Grid2 xs={12}>
               <p>
                 At CZODIAC, we are committed to protecting the privacy and
                 personal information of our users. We encourage you to read our
@@ -111,7 +110,7 @@ export default function FooterArea() {
                 </a>
               </p>
             </Grid2>
-            <Grid2 item xs={12}>
+            <Grid2 xs={12}>
               <p css={{ fontSize: 14, fontWeight: 400 }}>
                 © 2023 CZodiac. All rights reserved
               </p>
