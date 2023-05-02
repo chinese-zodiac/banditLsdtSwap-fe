@@ -147,7 +147,7 @@ export default function Home() {
             src="./images/CLOUD.png"
             sx={{
               left: '-150vw',
-              filter: 'hue-rotate(30deg)',
+              filter: 'hue-rotate(-3deg)',
               maxWidth: '90vw',
               margin: 0,
               position: 'absolute',
@@ -162,7 +162,7 @@ export default function Home() {
             src="./images/CLOUD.png"
             sx={{
               left: '-150vw',
-              filter: 'hue-rotate(60deg)',
+              filter: 'hue-rotate(3deg)',
               maxWidth: '90vw',
               margin: 0,
               position: 'absolute',
@@ -177,7 +177,7 @@ export default function Home() {
             src="./images/CLOUD.png"
             sx={{
               left: '-150vw',
-              filter: 'hue-rotate(90deg)',
+              filter: 'hue-rotate(-5deg)',
               maxWidth: '90vw',
               margin: 0,
               position: 'absolute',
@@ -192,7 +192,7 @@ export default function Home() {
             src="./images/CLOUD.png"
             sx={{
               left: '-150vw',
-              filter: 'hue-rotate(120deg)',
+              filter: 'hue-rotate(5deg)',
               maxWidth: '90vw',
               margin: 0,
               position: 'absolute',
@@ -207,7 +207,7 @@ export default function Home() {
             src="./images/CLOUD.png"
             sx={{
               left: '-150vw',
-              filter: 'hue-rotate(150deg)',
+              filter: 'hue-rotate(-10deg)',
               maxWidth: '90vw',
               margin: 0,
               position: 'absolute',
@@ -222,7 +222,7 @@ export default function Home() {
             src="./images/CLOUD.png"
             sx={{
               left: '-150vw',
-              filter: 'hue-rotate(180deg)',
+              filter: 'hue-rotate(10deg)',
               maxWidth: '90vw',
               margin: 0,
               position: 'absolute',
