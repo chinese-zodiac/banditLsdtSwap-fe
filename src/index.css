@@ -45,3 +45,27 @@ body {
     transform: translateY(-50px);
   }
 }
+
+@keyframes bird {
+  0% {
+    transform: translateY(-20px) translateX(0vw) scaleX(1);
+  }
+  25% {
+    transform: translateY(-150px) translateX(75vw) scaleX(01);
+  }
+  50% {
+    transform: translateY(-240px) translateX(80vw) scaleX(1);
+  }
+  70% {
+    transform: translateY(-220px) translateX(85vw) scaleX(1);
+  }
+  75% {
+    transform: translateY(-175px) translateX(66vw) scaleX(-1);
+  }
+  95% {
+    transform: translateY(-18px) translateX(-1vw) scaleX(-1);
+  }
+  100% {
+    transform: translateY(-20px) translateX(0vw) scaleX(1);
+  }
+}

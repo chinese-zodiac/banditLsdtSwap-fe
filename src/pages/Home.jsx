@@ -357,6 +357,19 @@ export default function Home() {
           </Box>
         </Container>
         <Box
+          as="img"
+          src="./images/BIRD.png"
+          sx={{
+            maxWidth: '90vw',
+            margin: 0,
+            position: 'absolute',
+            animationName: 'bird',
+            animationDuration: '75s',
+            animationIterationCount: 'infinite ',
+            animationDelay: '0s',
+          }}
+        />
+        <Box
           sx={{
             width: '100%',
             margin: '0',
