@@ -364,7 +364,7 @@ export default function Home() {
             margin: 0,
             position: 'absolute',
             animationName: 'bird',
-            animationDuration: '75s',
+            animationDuration: '125s',
             animationIterationCount: 'infinite ',
             animationDelay: '0s',
             zIndex: 3,
