@@ -137,7 +137,7 @@ export default function Home() {
               margin: 0,
               position: 'absolute',
               animationName: 'slideCloud1, floatCloud1',
-              animationDuration: '34s, 10s',
+              animationDuration: '68s, 19s',
               animationIterationCount: 'infinite ',
               animationDelay: '0s, 0s',
             }}
@@ -152,7 +152,7 @@ export default function Home() {
               margin: 0,
               position: 'absolute',
               animationName: 'slideCloud1, floatCloud1',
-              animationDuration: '31s, 15',
+              animationDuration: '61s, 29s',
               animationIterationCount: 'infinite ',
               animationDelay: '2s, 0s',
             }}
@@ -167,7 +167,7 @@ export default function Home() {
               margin: 0,
               position: 'absolute',
               animationName: 'slideCloud1, floatCloud1',
-              animationDuration: '35s, 11',
+              animationDuration: '71s, 23s',
               animationIterationCount: 'infinite ',
               animationDelay: '7s, 0s',
             }}
@@ -182,7 +182,7 @@ export default function Home() {
               margin: 0,
               position: 'absolute',
               animationName: 'slideCloud1, floatCloud1',
-              animationDuration: '26s, 14',
+              animationDuration: '52s, 17s',
               animationIterationCount: 'infinite ',
               animationDelay: '11s, 0s',
             }}
@@ -197,7 +197,7 @@ export default function Home() {
               margin: 0,
               position: 'absolute',
               animationName: 'slideCloud1, floatCloud1',
-              animationDuration: '28s, 12s',
+              animationDuration: '55s, 25s',
               animationIterationCount: 'infinite ',
               animationDelay: '16s, 0s',
             }}
@@ -212,7 +212,7 @@ export default function Home() {
               margin: 0,
               position: 'absolute',
               animationName: 'slideCloud1, floatCloud1',
-              animationDuration: '42s, 9s',
+              animationDuration: '83s, 16s',
               animationIterationCount: 'infinite ',
               animationDelay: '1s, 0s',
             }}
@@ -227,7 +227,7 @@ export default function Home() {
               margin: 0,
               position: 'absolute',
               animationName: 'slideCloud1, floatCloud1',
-              animationDuration: '29s, 10s',
+              animationDuration: '57s, 20s',
               animationIterationCount: 'infinite ',
               animationDelay: '17s, 0s',
             }}
