@@ -96,8 +96,8 @@ function HeaderBar({ lsdtBal, banditBal }) {
                       sx={{
                         width: '9em',
                         textTransform: 'unset',
-                        backgroundColor: theme.palette.primary.main,
-                        color: theme.palette.text.dark,
+                        backgroundColor: theme.palette.accent.main,
+                        color: theme.palette.text.primary,
                       }}
                     >
                       <Avatar
@@ -107,7 +107,7 @@ function HeaderBar({ lsdtBal, banditBal }) {
                           mr: 1,
                           height: 'auto',
                           width: '0.9em',
-                          border: 'solid 1px ' + theme.palette.text.dark,
+                          border: 'solid 1px ' + theme.palette.text.primary,
                         }}
                       />
                       0x...{address.substring(38)}
@@ -123,7 +123,8 @@ function HeaderBar({ lsdtBal, banditBal }) {
                       variant="contained"
                       sx={{
                         width: '9em',
-                        color: theme.palette.text.dark,
+                        backgroundColor: theme.palette.accent.main,
+                        color: theme.palette.text.primary,
                         fontWeight: 'bold',
                       }}
                     >
