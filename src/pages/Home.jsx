@@ -116,7 +116,7 @@ export default function Home() {
             paddingTop: '1em',
             textAlign: 'left',
             position: 'relative',
-            zIndex: 3,
+            zIndex: 4,
           }}
         >
           <Card sx={{ boxShadow: textShadow }}>
@@ -244,7 +244,7 @@ export default function Home() {
               fontWeight: 'bold',
               textShadow: textShadow,
               position: 'relative',
-              zIndex: 3,
+              zIndex: 4,
             }}
           >
             Unleash the Bandit Within:
@@ -263,14 +263,14 @@ export default function Home() {
               fontWeight: 'bold',
               textShadow: textShadow,
               position: 'relative',
-              zIndex: 3,
+              zIndex: 4,
             }}
           >
             OPEN: {startTimer}
             <br />
             CLOSE: {endTimer}
           </Typography>
-          <Box sx={{ textAlign: 'center', position: 'relative', zIndex: 3 }}>
+          <Box sx={{ textAlign: 'center', position: 'relative', zIndex: 4 }}>
             <EtherTextField
               decimals={18}
               value={lsdtValue}
@@ -360,13 +360,14 @@ export default function Home() {
           as="img"
           src="./images/BIRD.png"
           sx={{
-            maxWidth: '90vw',
+            width: { xs: '100px', md: '256px' },
             margin: 0,
             position: 'absolute',
             animationName: 'bird',
             animationDuration: '75s',
             animationIterationCount: 'infinite ',
             animationDelay: '0s',
+            zIndex: 3,
           }}
         />
         <Box
@@ -375,13 +376,13 @@ export default function Home() {
             margin: '0',
             position: 'relative',
             top: '5px',
-            zIndex: 3,
+            zIndex: 4,
           }}
           as="img"
           src="./images/FLAMETHROWER.png"
         />
       </Box>
-      <FooterArea sx={{ zIndex: 3, position: 'relative' }} />
+      <FooterArea sx={{ zIndex: 4, position: 'relative' }} />
     </>
   );
 }
