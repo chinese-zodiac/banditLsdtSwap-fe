@@ -146,7 +146,7 @@ export default function Home() {
             Maximize Your Gains by Burning LSDT Today!
           </Typography>
           <Typography
-            as="h1"
+            as="p"
             sx={{
               color: theme.palette.text.primary,
               fontSize: { xs: '1.5em', md: '2em' },
@@ -207,6 +207,21 @@ export default function Home() {
                 },
               }}
             />
+            <Typography
+              as="p"
+              sx={{
+                color: theme.palette.text.primary,
+                fontSize: { xs: '1.5em', md: '2em' },
+                lineHeight: 1.1,
+                textAlign: 'center',
+                marginLeft: { xs: '1.5em', md: '1em' },
+                marginTop: '1em',
+                fontWeight: 'bold',
+                textShadow: textShadow,
+              }}
+            >
+              1 LSDT = 15 🎭🔫💰🏴‍☠️👤
+            </Typography>
             <br />
             <Button
               sx={{ marginTop: '5em' }}
