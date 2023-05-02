@@ -1,7 +1,7 @@
 import {
   EthereumClient,
-  modalConnectors,
-  walletConnectProvider,
+  w3mConnectors,
+  w3mProvider,
 } from '@web3modal/ethereum';
 import { Web3Modal } from '@web3modal/react';
 import { WagmiConfig, configureChains, createClient } from 'wagmi';
@@ -15,13 +15,11 @@ if (!import.meta.env.VITE_WALLETCONNECT_CLOUD_ID) {
 }
 const projectId = import.meta.env.VITE_WALLETCONNECT_CLOUD_ID;
 const chains = [bsc];
-const { provider } = configureChains(chains, [
-  walletConnectProvider({ projectId }),
-]);
+const { provider } = configureChains(chains, [w3mProvider({ projectId })]);
 const wagmiClient = createClient({
   autoConnect: true,
-  connectors: modalConnectors({
-    version: '1',
+  connectors: w3mConnectors({
+    version: 2,
     appName: 'BanditLsdtSwap',
     chains,
     projectId,
