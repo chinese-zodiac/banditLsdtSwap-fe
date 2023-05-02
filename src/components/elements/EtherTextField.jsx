@@ -1,6 +1,26 @@
 import { formatUnits, parseUnits } from 'ethers/lib/utils.js';
 import React, { useEffect, useRef, useState } from 'react';
 
+const getInputValueFromPropValue = (value, decimals) => {
+  if (!value) {
+    return '';
+  } else {
+    let parseInputValue;
+
+    try {
+      parseInputValue = parseUnits(value, decimals);
+    } catch {
+      // do nothing
+    }
+
+    if (!parseInputValue || !parseInputValue.eq(value)) {
+      return formatUnits(value, decimals);
+    } else {
+      return '';
+    }
+  }
+};
+
 function EtherTextField({
   decimals,
   value,
@@ -13,57 +33,50 @@ function EtherTextField({
 }) {
   const inputRef = useRef(null);
 
-  const [inputValue, setInputvalue] = useState('');
+  const [inputValue, setInputValue] = useState(
+    getInputValueFromPropValue(value, decimals)
+  );
 
-  // update current value
-  useEffect(() => {
-    if (!value) {
-      setInputvalue('');
-    } else {
-      let parseInputValue;
-
-      try {
-        parseInputValue = parseUnits(inputValue || '0', decimals);
-      } catch {
-        // do nothing
-      }
-
-      if (!parseInputValue || !parseInputValue.eq(value)) {
-        setInputvalue(formatUnits(value, decimals));
-      }
-    }
-  }, [value, decimals, inputValue]);
-
-  React.useEffect(() => {
-    if (!renderInput && autofocus && inputRef) {
-      const node = inputRef.current;
-      node.focus();
-    }
-  }, [autofocus, inputRef]);
+  const [prevValue, setPrevValue] = useState(value);
+  if (prevValue !== value) {
+    setPrevValue(value);
+    inputValue;
+  }
 
   const updateValue = (event) => {
-    const { value } = event.currentTarget;
+    const { value: targetValue } = event.currentTarget;
+    console.log(targetValue);
 
-    if (value === '') {
-      onChange(value);
-      setInputvalue(value);
+    if (targetValue === '') {
+      setPrevValue(targetValue);
+      setInputValue(targetValue);
+      onChange(targetValue);
       return;
     }
 
     let newValue;
     try {
-      newValue = parseUnits(value, decimals);
+      newValue = parseUnits(targetValue, decimals);
     } catch (e) {
-      // don't update the input on invalid values
+      //ignore on error
       return;
     }
 
-    const invalidValue = (min && newValue.lt(min)) || (max && newValue.gt(max));
-    if (invalidValue) {
+    if (!!min && newValue.lt(min)) {
+      setPrevValue(min.toString());
+      setInputValue(formatUnits(min, decimals));
+      onChange(min.toString());
       return;
     }
 
-    setInputvalue(value);
+    if (!!max && newValue.gt(max)) {
+      setPrevValue(max.toString());
+      setInputValue(formatUnits(max, decimals));
+      onChange(max.toString());
+      return;
+    }
+    setPrevValue(newValue.toString());
+    setInputValue(targetValue);
     onChange(newValue.toString());
   };
 
@@ -73,6 +86,13 @@ function EtherTextField({
     type: 'text',
     value: inputValue,
   };
+
+  useEffect(() => {
+    if (!renderInput && autofocus && inputRef) {
+      const node = inputRef.current;
+      node.focus();
+    }
+  }, [autofocus, inputRef]);
 
   return renderInput ? (
     renderInput({ ...inputProps })

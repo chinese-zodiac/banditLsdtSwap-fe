@@ -11,20 +11,54 @@ import Box from '@mui/material/Box';
 import { BigNumber } from 'ethers';
 import { parseEther } from 'ethers/lib/utils.js';
 import { useState } from 'react';
+import { useAccount, useBalance } from 'wagmi';
 import EtherTextField from '../components/elements/EtherTextField';
 import FooterArea from '../components/layouts/FooterArea';
 import HeaderBar from '../components/layouts/HeaderBar';
+import { ADDRESS_BANDIT, ADDRESS_LSDT } from '../constants/addresses';
 import { LINK_TELEGRAM } from '../constants/links';
+import { bnToCompact } from '../utils/bnToFixed';
 
 export default function Home() {
   const theme = useTheme();
 
   const [lsdtValue, setLsdtValue] = useState(parseEther('0'));
 
+  const { address, isConnecting, isDisconnected } = useAccount();
+
+  const {
+    data: lsdtBalData,
+    isError: lsdtBalIsError,
+    isLoading: lsdtBalIsLoading,
+  } = useBalance({
+    address: address,
+    token: ADDRESS_LSDT,
+  });
+
+  const lsdtBal =
+    !lsdtBalIsError && !lsdtBalIsLoading ? lsdtBalData?.value : parseEther('0');
+
+  const {
+    data: banditBalData,
+    isError: banditBalIsError,
+    isLoading: banditBalIsLoading,
+  } = useBalance({
+    address: address,
+    token: ADDRESS_BANDIT,
+  });
+
+  const banditBal =
+    !banditBalIsLoading && !banditBalIsError
+      ? banditBalData?.value
+      : parseEther('0');
+
   return (
     <>
       <Box css={{ backgroundColor: theme.palette.primary.dark }}>
-        <HeaderBar />
+        <HeaderBar
+          lsdtBal={bnToCompact(lsdtBal, 18, 5)}
+          banditBal={bnToCompact(banditBal, 18, 5)}
+        />
         <Container
           sx={{ minHeight: '100vh', paddingTop: '1em', textAlign: 'left' }}
         >
@@ -61,7 +95,11 @@ export default function Home() {
             <EtherTextField
               decimals={18}
               value={lsdtValue}
-              onChange={(newValue) => setLsdtValue(BigNumber.from(newValue))}
+              onChange={(newValue) =>
+                !!newValue
+                  ? setLsdtValue(BigNumber.from(newValue))
+                  : BigNumber.from(0)
+              }
               renderInput={(props) => (
                 <TextField
                   variant="standard"
@@ -72,8 +110,8 @@ export default function Home() {
                 />
               )}
               placeholder="0.00"
-              max={parseEther('10000')}
-              min={parseEther('0')}
+              min={BigNumber.from(0)}
+              max={lsdtBal}
             />
             <br />
             <Button variant="contained">BURN LSDT</Button>

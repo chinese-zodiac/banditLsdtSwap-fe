@@ -12,7 +12,7 @@ import makeBlockie from 'ethereum-blockies-base64';
 import React from 'react';
 import { useAccount, useDisconnect } from 'wagmi';
 
-function HeaderBar() {
+function HeaderBar({ lsdtBal, banditBal }) {
   const theme = useTheme();
 
   const {
@@ -69,7 +69,7 @@ function HeaderBar() {
                       color: theme.palette.accent.light,
                     }}
                   >
-                    100
+                    {lsdtBal}
                   </Typography>{' '}
                   🎭🔫💰🏴‍☠️👤:{' '}
                   <Typography
@@ -78,7 +78,7 @@ function HeaderBar() {
                       color: theme.palette.accent.light,
                     }}
                   >
-                    100
+                    {banditBal}
                   </Typography>
                 </Paper>
               </Tooltip>
