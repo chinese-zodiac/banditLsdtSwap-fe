@@ -92,18 +92,33 @@ export default function Home() {
 
   return (
     <>
+      <HeaderBar
+        lsdtBal={bnToCompact(lsdtBal, 18, 5)}
+        banditBal={bnToCompact(banditBal, 18, 5)}
+      />
       <Box
         css={{
+          position: 'relative',
           backgroundColor: theme.palette.primary.dark,
-          backgroundImage: "url('./images/BG1.png')",
-          backgroundSize: 'contain',
+          /*backgroundImage: "url('./images/BG1.png')",
+          backgroundSize: 'contain',*/
+          background:
+            'linear-gradient(180deg, rgba(220,0,192,1) 5%, rgba(0,107,213,1) 10%, rgba(0,211,192,1) 30%, rgba(0,213,0,1) 60%, rgba(183,225,0,1) 90%)',
         }}
       >
-        <HeaderBar
-          lsdtBal={bnToCompact(lsdtBal, 18, 5)}
-          banditBal={bnToCompact(banditBal, 18, 5)}
+        <Box
+          as="img"
+          sx={{ position: 'fixed', zIndex: 1, maxWidth: '75vw' }}
+          src="./images/SUN.png"
         />
-        <Container sx={{ paddingTop: '1em', textAlign: 'left' }}>
+        <Container
+          sx={{
+            paddingTop: '1em',
+            textAlign: 'left',
+            position: 'relative',
+            zIndex: 2,
+          }}
+        >
           <Card sx={{ boxShadow: textShadow }}>
             <CardMedia
               component="video"
@@ -217,12 +232,18 @@ export default function Home() {
           </Box>
         </Container>
         <Box
-          sx={{ width: '100%', margin: '0', position: 'relative', top: '5px' }}
+          sx={{
+            width: '100%',
+            margin: '0',
+            position: 'relative',
+            top: '5px',
+            zIndex: 2,
+          }}
           as="img"
           src="./images/FLAMETHROWER.png"
         />
-        <FooterArea />
       </Box>
+      <FooterArea sx={{ zIndex: 2, position: 'relative' }} />
     </>
   );
 }

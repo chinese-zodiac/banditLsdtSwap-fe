@@ -4,19 +4,20 @@ import React from 'react';
 import { LINK_PRIVACY_POLICY, LINK_TERMS_OF_USE } from '../../constants/links';
 import MenuLinkSocialIcon from '../styled/MenuLinkSocialIcon';
 
-export default function FooterArea() {
+export default function FooterArea({ sx }) {
   const theme = useTheme();
   const bp = theme.breakpoints.values;
   const mq = (bp) => `@media (min-width: ${bp}px)`;
   return (
     <>
       <Box
-        css={{
+        sx={{
           backgroundColor: theme.palette.background.paper,
           color: theme.palette.text.secondary,
           padding: '100px 0px',
           margin: '0',
           width: '100%',
+          ...sx,
         }}
       >
         <Container>
