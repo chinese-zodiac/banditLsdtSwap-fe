@@ -404,7 +404,7 @@ export default function Home() {
                   },
                 }}
                 onClick={() => {
-                  if (lsdtAllowance.lt(lsdtBal)) {
+                  if (lsdtAllowance?.lt(lsdtBal ?? BigNumber.from(0))) {
                     //approve
                     writeApproveLsdt();
                   } else {
@@ -426,7 +426,7 @@ export default function Home() {
               }}
             >
               Approve Status:{' '}
-              {lsdtAllowance?.gte(lsdtBal) ? (
+              {lsdtAllowance?.gte(lsdtBal ?? BigNumber.from(0)) ? (
                 <Typography as="span" sx={{ color: 'lime' }}>
                   OK
                 </Typography>
