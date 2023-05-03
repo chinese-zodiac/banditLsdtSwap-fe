@@ -11,8 +11,14 @@ import Box from '@mui/material/Box';
 import { BigNumber } from 'ethers';
 import { parseEther } from 'ethers/lib/utils.js';
 import { useState } from 'react';
-import { useAccount, useBalance, useContractReads } from 'wagmi';
+import {
+  useAccount,
+  useBalance,
+  useContractRead,
+  useContractReads,
+} from 'wagmi';
 import BanditLsdtSwapAbi from '../abi/BanditLsdtSwap.json';
+import IERC20Abi from '../abi/IERC20.json';
 import EtherTextField from '../components/elements/EtherTextField';
 import FooterArea from '../components/layouts/FooterArea';
 import HeaderBar from '../components/layouts/HeaderBar';
@@ -28,6 +34,16 @@ import { czCashBuyLink } from '../utils/czcashLink';
 const banditLsdtSwapContract = {
   address: ADDRESS_BANDITLSDTSWAP,
   abi: BanditLsdtSwapAbi,
+};
+
+const lsdtContract = {
+  address: ADDRESS_LSDT,
+  abi: IERC20Abi,
+};
+
+const banditContract = {
+  address: ADDRESS_BANDIT,
+  abi: IERC20Abi,
 };
 
 export default function Home() {
@@ -55,6 +71,20 @@ export default function Home() {
       },
     ],
   });
+
+  const {
+    data: banditTotalSupplyData,
+    isError: banditTotalSupplyIsError,
+    isLoading: banditTotalSupplyIsLoading,
+  } = useContractRead({
+    ...banditContract,
+    functionName: 'totalSupply',
+  });
+
+  const banditTotalSupply =
+    !banditTotalSupplyIsError && !banditTotalSupplyIsLoading
+      ? banditTotalSupplyData?.value
+      : parseEther('0');
 
   const {
     data: lsdtBalData,
@@ -269,6 +299,14 @@ export default function Home() {
             OPEN: {startTimer}
             <br />
             CLOSE: {endTimer}
+            <br />
+            TOTAL LSDT Burned: {bnToCompact(
+              banditTotalSupply?.div(15),
+              18,
+              3
+            )}{' '}
+            <br />
+            TOTAL 🎭🔫💰🏴‍☠️👤 Minted: {bnToCompact(banditTotalSupply, 18, 3)}
           </Typography>
           <Box sx={{ textAlign: 'center', position: 'relative', zIndex: 4 }}>
             <EtherTextField
