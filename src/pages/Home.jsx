@@ -8,7 +8,7 @@ import {
   Typography,
 } from '@mui/material';
 import Box from '@mui/material/Box';
-import { BigNumber } from 'ethers';
+import { BigNumber, constants } from 'ethers';
 import { parseEther } from 'ethers/lib/utils.js';
 import { useState } from 'react';
 import {
@@ -16,10 +16,13 @@ import {
   useBalance,
   useContractRead,
   useContractReads,
+  useContractWrite,
+  usePrepareContractWrite,
 } from 'wagmi';
 import BanditLsdtSwapAbi from '../abi/BanditLsdtSwap.json';
 import IERC20Abi from '../abi/IERC20.json';
 import EtherTextField from '../components/elements/EtherTextField';
+import TxStatus from '../components/elements/TxStatus';
 import FooterArea from '../components/layouts/FooterArea';
 import HeaderBar from '../components/layouts/HeaderBar';
 import {
@@ -79,11 +82,12 @@ export default function Home() {
   } = useContractRead({
     ...banditContract,
     functionName: 'totalSupply',
+    watch: true,
   });
 
   const banditTotalSupply =
     !banditTotalSupplyIsError && !banditTotalSupplyIsLoading
-      ? banditTotalSupplyData?.value
+      ? banditTotalSupplyData
       : parseEther('0');
 
   const {
@@ -93,6 +97,7 @@ export default function Home() {
   } = useBalance({
     address: address,
     token: ADDRESS_LSDT,
+    watch: true,
   });
 
   const lsdtBal =
@@ -105,11 +110,28 @@ export default function Home() {
   } = useBalance({
     address: address,
     token: ADDRESS_BANDIT,
+    watch: true,
   });
 
   const banditBal =
     !banditBalIsLoading && !banditBalIsError
       ? banditBalData?.value
+      : parseEther('0');
+
+  const {
+    data: lsdtAllowanceData,
+    isError: lsdtAllowanceIsError,
+    isLoading: lsdtAllowanceIsLoading,
+  } = useContractRead({
+    ...lsdtContract,
+    functionName: 'allowance',
+    args: [address, ADDRESS_BANDITLSDTSWAP],
+    watch: true,
+  });
+
+  const lsdtAllowance =
+    !lsdtAllowanceIsLoading && !lsdtAllowanceIsError
+      ? lsdtAllowanceData
       : parseEther('0');
 
   const [openTimestamp, closeTimestamp] =
@@ -119,6 +141,34 @@ export default function Home() {
 
   const startTimer = useCountdown(openTimestamp, 'Started');
   const endTimer = useCountdown(closeTimestamp, 'Ended');
+
+  const { config: configApproveLsdt } = usePrepareContractWrite({
+    ...lsdtContract,
+    functionName: 'approve',
+    args: [ADDRESS_BANDITLSDTSWAP, constants.MaxUint256],
+  });
+  const {
+    data: dataApproveLsdt,
+    error: errorApproveLsdt,
+    isLoading: isLoadingApproveLsdt,
+    isSuccess: isSuccessApproveLsdt,
+    isError: isErrorApproveLsdt,
+    write: writeApproveLsdt,
+  } = useContractWrite(configApproveLsdt);
+
+  const { config: configBurnLsdt } = usePrepareContractWrite({
+    ...banditLsdtSwapContract,
+    functionName: 'burnLsdtForBandit',
+    args: [lsdtValue, address],
+  });
+  const {
+    data: dataBurnLsdt,
+    error: errorBurnLsdt,
+    isLoading: isLoadingBurnLsdt,
+    isSuccess: isSuccessBurnLsdt,
+    isError: isErrorBurnLsdt,
+    write: writeBurnLsdt,
+  } = useContractWrite(configBurnLsdt);
 
   return (
     <>
@@ -353,8 +403,67 @@ export default function Home() {
                     filter: 'hue-rotate(-200deg) invert(100%)',
                   },
                 }}
+                onClick={() => {
+                  if (lsdtAllowance.lt(lsdtBal)) {
+                    //approve
+                    writeApproveLsdt();
+                  } else {
+                    //Burn
+                    writeBurnLsdt();
+                  }
+                }}
               />
             </Button>
+            <Typography
+              as="div"
+              sx={{
+                color: theme.palette.text.primary,
+                fontSize: { xs: '0.8em', md: '1em' },
+                lineHeight: 1.1,
+                textAlign: 'center',
+                fontWeight: 'bold',
+                textShadow: textShadow,
+              }}
+            >
+              Approve Status:{' '}
+              {lsdtAllowance?.gte(lsdtBal) ? (
+                <Typography as="span" sx={{ color: 'lime' }}>
+                  OK
+                </Typography>
+              ) : (
+                <Typography as="span" sx={{ color: 'cyan' }}>
+                  Click Burn LSDT to approve
+                </Typography>
+              )}
+              <TxStatus
+                isLoading={isLoadingApproveLsdt}
+                isSuccess={isSuccessApproveLsdt}
+                isError={isErrorApproveLsdt}
+                txHash={dataApproveLsdt?.hash}
+                errMsg={errorApproveLsdt?.message}
+              />
+            </Typography>
+            <Typography
+              as="div"
+              sx={{
+                color: theme.palette.text.primary,
+                fontSize: { xs: '0.8em', md: '1em' },
+                lineHeight: 1.1,
+                textAlign: 'center',
+                fontWeight: 'bold',
+                textShadow: textShadow,
+              }}
+            >
+              Burn Tx Info:{' '}
+              <TxStatus
+                isLoading={isLoadingBurnLsdt}
+                isSuccess={isSuccessBurnLsdt}
+                isError={isErrorBurnLsdt}
+                txHash={dataBurnLsdt?.hash}
+                errMsg={errorBurnLsdt?.message}
+              />
+            </Typography>
+
             <Typography
               as="p"
               sx={{
